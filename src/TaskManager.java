@@ -175,7 +175,6 @@ public class TaskManager {
     }
 
     public void removeAllSubtasks() {
-        System.out.println("removeAllSubtasks");
         for (Epic epic : epics.values()) {
             epic.getSubtaskIds().clear();
             findEpicStatus(epic);
