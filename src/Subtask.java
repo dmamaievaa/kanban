@@ -1,6 +1,6 @@
 import java.util.Objects;
 
-class Subtask extends Task {
+public class Subtask extends Task {
     private int epicId;
 
     public Subtask(int id, String title, String description, Status status, int epicId) {
