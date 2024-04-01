@@ -1,4 +1,4 @@
-import java.util.Objects;
+package Task;
 
 public class Subtask extends Task {
     private int epicId;
@@ -20,20 +20,6 @@ public class Subtask extends Task {
     @Override
     public Type getType() {
         return Type.SUBTASK;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-        Subtask subtask = (Subtask) o;
-        return Objects.equals(epicId, subtask.epicId);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), epicId);
     }
 
     @Override

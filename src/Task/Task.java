@@ -1,3 +1,5 @@
+package Task;
+
 import java.util.Objects;
 
 public class Task {
@@ -12,6 +14,14 @@ public class Task {
         this.title = title;
         this.description = description;
         this.status = status;
+        this.type = Type.TASK;
+    }
+
+    public Task(int id, String title, String description) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.status = Status.NEW;
         this.type = Type.TASK;
     }
 
@@ -56,15 +66,12 @@ public class Task {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Task task = (Task) o;
-        return Objects.equals(id, task.id) &&
-                Objects.equals(title, task.title) &&
-                Objects.equals(description, task.description) &&
-                status == task.status;
+        return Objects.equals(id, task.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, description, status);
+        return Objects.hash(id);
     }
 
     @Override
