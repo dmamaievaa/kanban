@@ -18,7 +18,8 @@ public class Main {
         Subtask subtask2InEpic1 = new Subtask(2, "Second subtask in epic 1",
                 "Second subtask description", Status.IN_PROGRESS, 1);
         Subtask subtaskInEpic2 = new Subtask(3, "Subtask in epic 2",
-                "Subtask description", Status.NEW, 2);
+                "Subtask description", Status.IN_PROGRESS, 2);
+
         taskManager.createEpic(epic1);
         taskManager.createEpic(epic2);
         taskManager.createSubtask(subtask1InEpic1);
@@ -26,10 +27,10 @@ public class Main {
         taskManager.createSubtask(subtaskInEpic2);
         taskManager.printAllInstances();
         Task task1Updated = new Task(1, "First task after update", "First task with new status",
-                Status.IN_PROGRESS);
+                Status.NEW);
         taskManager.updateTask(task1Updated);
         Subtask subtaskInEpic2Updated = new Subtask(3, "Subtask in epic 2 after update",
-                "Subtask was finished", Status.DONE, 2);
+                "Subtask was finished", Status.IN_PROGRESS, 2);
         taskManager.updateSubtask(subtaskInEpic2Updated);
         taskManager.printAllInstances();
         taskManager.removeTaskById(1);
