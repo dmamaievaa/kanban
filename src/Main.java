@@ -8,7 +8,7 @@ public class Main {
     public static void main(String[] args) {
         TaskManager taskManager = new TaskManager();
         Task task1 = new Task("First task", "First task description", Status.NEW);
-        Task task2 = new Task("Second task", "Second task description", Status.NEW);
+        Task task2 = new Task("Second task", "Second task description", Status.IN_PROGRESS);
         taskManager.createTask(task1);
         taskManager.createTask(task2);
         Epic epic1 = new Epic("First epic", "First epic description");
