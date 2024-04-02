@@ -18,7 +18,6 @@ public class Task {
     }
 
     public Task(String title, String description, Status status) {
-        this.id = id;
         this.title = title;
         this.description = description;
         this.status = status;
