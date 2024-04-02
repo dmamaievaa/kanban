@@ -1,4 +1,4 @@
-package Task;
+package task;
 
 import java.util.Objects;
 
@@ -10,18 +10,23 @@ public class Task {
     protected Type type;
 
     public Task(int id, String title, String description, Status status) {
-        this.id = id;
         this.title = title;
         this.description = description;
         this.status = status;
         this.type = Type.TASK;
+        this.id = id;
     }
 
-    public Task(int id, String title, String description) {
+    public Task(String title, String description, Status status) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.status = Status.NEW;
+        this.type = Type.TASK;
+    }
+    public Task(String title, String description) {
+        this.title = title;
+        this.description = description;
         this.type = Type.TASK;
     }
 

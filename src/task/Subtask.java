@@ -1,10 +1,17 @@
-package Task;
+package task;
 
 public class Subtask extends Task {
     private int epicId;
 
+    public Subtask(String title, String description, Status status, int epicId) {
+        super(title, description, status);
+        this.type = Type.SUBTASK;
+        this.epicId = epicId;
+    }
     public Subtask(int id, String title, String description, Status status, int epicId) {
-        super(id, title, description, status);
+        super(title, description);
+        this.status = status;
+        this.id = id;
         this.type = Type.SUBTASK;
         this.epicId = epicId;
     }

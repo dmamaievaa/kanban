@@ -1,9 +1,9 @@
-package Manager;
+package manager;
 
-import Task.Task;
-import Task.Epic;
-import Task.Subtask;
-import Task.Status;
+import task.Task;
+import task.Epic;
+import task.Subtask;
+import task.Status;
 
 
 import java.util.ArrayList;
@@ -15,6 +15,7 @@ public class TaskManager {
     protected HashMap<Integer, Task> tasks;
     protected HashMap<Integer, Subtask> subtasks;
     protected HashMap<Integer, Epic> epics;
+    protected int id = 1;
 
     public TaskManager() {
         this.tasks = new HashMap<>();
@@ -22,17 +23,25 @@ public class TaskManager {
         this.subtasks = new HashMap<>();
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     // Methods for tasks
     public void createTask(Task task) {
-        tasks.put(task.getId(), task);
+        task.setId(id);
+        tasks.put(id, task);
+        generateId();
     }
 
     public void updateTask(Task task) {
         if (tasks.containsKey(task.getId())) {
             tasks.put(task.getId(), task);
-        } else {
-            System.out.println("Task with ID " + task.getId() + " not found");
-        }
+        } else  System.out.println("updateTask: Task with ID " + task.getId() + " not found");
     }
 
     public void removeTaskById(int taskId) {
@@ -53,12 +62,19 @@ public class TaskManager {
 
     // Methods for epics
     public void createEpic(Epic epic) {
-        epics.put(epic.getId(), epic);
+        epic.setId(id);
+        epics.put(id, epic);
+        generateId();
     }
 
     public void updateEpic(Epic epic) {
         if (epics.containsKey(epic.getId())) {
-            epics.put(epic.getId(), epic);
+            Epic current = epics.get(epic.getId());
+            if (current == null) {
+                return;
+            }
+            current.setTitle(epic.getTitle());
+            current.setDescription(epic.getDescription());
         } else {
             System.out.println("Epic with ID " + epic.getId() + " not found");
         }
@@ -128,11 +144,12 @@ public class TaskManager {
 
     // Methods for subtasks
     public void createSubtask(Subtask subtask) {
-        int id = subtask.getId();
         subtasks.put(id, subtask);
+        subtask.setId(id);
         Epic epic = epics.get(subtask.getEpicId());
         if (epic != null) {
             epic.addSubtask(id, subtask);
+            generateId();
             findEpicStatus(epic);
         } else {
             System.out.println("Epic with ID " + subtask.getEpicId() + " not found.");
@@ -154,7 +171,7 @@ public class TaskManager {
             if (epicToUpdate != null) {
                 findEpicStatus(epicToUpdate);
             }
-        }
+        } else System.out.println("Subtask with id " + subtaskId + " not found");
     }
 
     public void removeSubtaskById(int id) {
@@ -173,8 +190,7 @@ public class TaskManager {
     }
 
     public Subtask getSubtaskById(int subtaskId) {
-        Subtask subtask = subtasks.get(subtaskId);
-        return (subtask);
+        return subtasks.get(subtaskId);
     }
 
     public List<Subtask> getAllSubtasks() {
@@ -189,6 +205,10 @@ public class TaskManager {
         subtasks.clear();
     }
 
+    public void generateId(){
+        id++;
+    }
+
     public void printAllInstances() {
         System.out.println("Tasks:");
         System.out.println(getAllTasks());
@@ -197,4 +217,5 @@ public class TaskManager {
         System.out.println("Epics");
         System.out.println(getAllEpics());
     }
+
 }
