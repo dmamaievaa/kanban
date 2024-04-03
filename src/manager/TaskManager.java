@@ -23,13 +23,6 @@ public class TaskManager {
         this.subtasks = new HashMap<>();
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     // Methods for tasks
     public void createTask(Task task) {
@@ -205,7 +198,7 @@ public class TaskManager {
         subtasks.clear();
     }
 
-    public void generateId(){
+    private void generateId(){
         id++;
     }
 
