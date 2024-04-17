@@ -17,10 +17,10 @@ public class InMemoryTaskManagerTest {
     void BeforeEach(){
         taskManager = Managers.getDefault();
     }
-   //проверка, что InMemoryTaskManager добавляет задачи разного типа, может найти их по id и
-   // история просмотров обновляется
+    //проверка, что InMemoryTaskManager добавляет задачи разного типа, может найти их по id и
+    // история просмотров обновляется
     @Test
-    void createNewTask() {
+    void shouldCreateNewTask() {
         Task task1 = new Task("Task1", "Task1 description", Status.NEW);
         taskManager.createTask(task1);
         Task createdTask = taskManager.getTaskById(task1.getId());
@@ -44,11 +44,13 @@ public class InMemoryTaskManagerTest {
     }
 
     @Test
-    void createNewEpic() {
+    void shouldCreateNewEpic() {
         Epic epic1 = new Epic("Epic", "Epic description");
         taskManager.createEpic(epic1);
         Epic createdEpic = taskManager.getEpicById(epic1.getId());
         assertNotNull(createdEpic, "Epic not found");
+        assertTrue(taskManager.getAllEpics().contains(epic1), "Epic wasn't created");
+        assertTrue(taskManager.getHistory().contains(epic1), "Epic wasn't wasn't added to history");
         assertEquals(epic1, createdEpic, "Epics are not equal");
         List<Epic> epicsList = taskManager.getAllEpics();
         assertNotNull(epicsList, "Epics not found");
@@ -60,7 +62,7 @@ public class InMemoryTaskManagerTest {
     }
 
     @Test
-    void createNewSubtask() {
+    void shouldCreateNewSubtask() {
         Epic epic1 = new Epic("First epic", "First epic description");
         taskManager.createEpic(epic1);
         Subtask subtask1InEpic1 = new Subtask("First subtask in epic 1",
@@ -128,15 +130,44 @@ public class InMemoryTaskManagerTest {
         assertEquals(subtask2InEpic1.getEpicId(), subtaskToCheck.getEpicId(), "Different epic id");
     }
 
+    @Test
+    void shouldRemoveTaskById() {
+        Task task1 = new Task("Task1", "Task1 description", Status.NEW);
+        taskManager.createTask(task1);
+        taskManager.removeTaskById(task1.getId());
+        assertNotNull(task1.getId(), "Invalid id");
+        assertFalse(taskManager.getAllTasks().contains(task1), "Task wasn't deleted");
+        assertFalse(taskManager.getHistory().contains(task1), "Task wasn't deleted from history");
+    }
+
+    @Test
+    void shouldRemoveEpicById() {
+        Epic epic1 = new Epic("First epic", "First epic description");
+        taskManager.createEpic(epic1);
+        Subtask subtask1InEpic1 = new Subtask("First subtask in epic 1",
+                "First subtask description", Status.NEW, epic1.getId());
+        taskManager.createSubtask(subtask1InEpic1);
+        taskManager.removeEpicById(epic1.getId());
+        assertFalse(taskManager.getAllEpics().contains(epic1), "Epic wasn't deleted");
+        assertFalse(taskManager.getAllSubtasks().contains(subtask1InEpic1), "Subtask wasn't deleted");
+        assertFalse(taskManager.getHistory().contains(epic1), "Epic wasn't deleted from history");
+        assertFalse(taskManager.getHistory().contains(subtask1InEpic1), "Subtask wasn't deleted from history");
+
+    }
+
+    @Test
+    void shouldRemoveSubtaskById() {
+        Epic epic1 = new Epic("First epic", "First epic description");
+        taskManager.createEpic(epic1);
+        Subtask subtask1InEpic1 = new Subtask("First subtask in epic 1",
+                "First subtask description", Status.NEW, epic1.getId());
+        taskManager.createSubtask(subtask1InEpic1);
+        taskManager.removeSubtaskById(subtask1InEpic1.getId());
+        assertFalse(taskManager.getAllSubtasks().contains(subtask1InEpic1), "Subtask wasn't deleted");
+        assertFalse(taskManager.getHistory().contains(subtask1InEpic1), "Subtask wasn't deleted from history");
+    }
 
 
 }
-
-
-
-
-
-
-
 
 

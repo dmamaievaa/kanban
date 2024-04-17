@@ -32,14 +32,6 @@ public class InMemoryTaskManager implements TaskManager {
         return historyManager.getHistory();
     }
 
-
-
-    // Methods for tasks
-  /*  @Override
-    public List<Task> getHistory() {
-        return getHistory();
-    }*/
-
     @Override
     public void createTask(Task task) {
         task.setId(id);
@@ -238,7 +230,7 @@ public class InMemoryTaskManager implements TaskManager {
     public void generateId() {
         id++;
     }
-    @Override
+
     public void printAllInstances() {
         System.out.println("Tasks:");
         System.out.println(getAllTasks());
@@ -246,10 +238,7 @@ public class InMemoryTaskManager implements TaskManager {
         System.out.println(getAllSubtasks());
         System.out.println("Epics");
         System.out.println(getAllEpics());
-        System.out.println("История:");
-        for (Task task : historyManager.getHistory()){
-            System.out.println(task);
-        }
     }
+
 
 }

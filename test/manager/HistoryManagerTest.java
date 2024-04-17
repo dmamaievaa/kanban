@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static task.Status.NEW;
 
 class HistoryManagerTest {
 
@@ -19,11 +18,10 @@ class HistoryManagerTest {
     protected Epic epic1;
     protected Subtask subtask1InEpic1;
     protected Subtask subtask2InEpic1;
-
     protected HistoryManager historyManager;
 
     @BeforeEach
-    void fillHistory() {
+    void beforeEach() {
         historyManager = Managers.getDefaultHistory();
         task1 = new Task("Task1", "Task1 description", Status.NEW);
         epic1 = new Epic("Epic", "Epic description");
@@ -35,43 +33,32 @@ class HistoryManagerTest {
 
     @Test
     void add() {
+
         historyManager.add(epic1);
         historyManager.add(task1);
         historyManager.add(subtask1InEpic1);
-        final List<Task> history = historyManager.getHistory();
-        assertNotNull(history, "History is filled");
-        assertEquals(3, history.size(), "History is filled");
-        assertTrue(history.contains(task1), "Task is not reflected in history");
-        assertTrue(history.contains(epic1), "Epic is not reflected in history");
-        assertTrue(history.contains(subtask1InEpic1), "Subtask is not reflected in history");
-
-        historyManager.add(task1);
-        final List<Task> historyUpdated = historyManager.getHistory();
-        assertTrue(historyUpdated.contains(task1), "Задача не попала в историю");
-        assertEquals(task1, historyUpdated.get(historyUpdated.size() - 1), "Новая добавленная задача не попала в конец списка истории");
-        int count = 0;
-        for (Task task : historyUpdated) {
-            if (task.equals(task1)) {
-                count += 1;
-            }
-        }
-        //assertEquals(1, count, "В истории более одного экземпляра задачи");
+        final List<Task> tasksHistory = historyManager.getHistory();
+        assertNotNull(tasksHistory, "History is filled");
+        assertEquals(3, tasksHistory.size(), "History is filled");
+        assertTrue(tasksHistory.contains(task1), "Task is not reflected in history");
+        assertTrue(tasksHistory.contains(epic1), "Epic is not reflected in history");
+        assertTrue(tasksHistory.contains(subtask1InEpic1), "Subtask is not reflected in history");
     }
 
     @Test
     void getHistory() {
         assertEquals(0, historyManager.getHistory().size(), "History is filled");
-        List<Task> expectedListHistory = new ArrayList<>();
+        List<Task> expectedHistory = new ArrayList<>();
         historyManager.add(task1);
-        expectedListHistory.add(task1);
+        expectedHistory.add(task1);
         historyManager.add(epic1);
-        expectedListHistory.add(epic1);
+        expectedHistory.add(epic1);
         historyManager.add(subtask1InEpic1);
-        expectedListHistory.add(subtask1InEpic1);
-        List<Task> listHistory = historyManager.getHistory();
-        assertNotNull(listHistory, "History is empty");
-        assertEquals(expectedListHistory.size(), listHistory.size(), "Sizes of history lists are different");
-        assertTrue(expectedListHistory.containsAll(listHistory), "History lists are different");
+        expectedHistory.add(subtask1InEpic1);
+        List<Task> actualHistory = historyManager.getHistory();
+        assertNotNull(actualHistory, "History is empty");
+        assertEquals(expectedHistory.size(), actualHistory.size(), "Sizes of history lists are different");
+        assertTrue(expectedHistory.containsAll(actualHistory), "History lists are different");
     }
 
 

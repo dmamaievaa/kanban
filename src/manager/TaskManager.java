@@ -49,5 +49,4 @@ public interface TaskManager {
 
     void removeAllSubtasks();
 
-    void printAllInstances();
 }
