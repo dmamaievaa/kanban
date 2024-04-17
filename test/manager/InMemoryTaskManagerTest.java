@@ -1,22 +1,25 @@
 package manager;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 import task.Status;
 import task.Task;
 import task.Epic;
 import task.Subtask;
 import java.util.List;
-import static org.junit.jupiter.api.Assertions.*;
 
 
 @DisplayName("InMemoryTaskManagerTest")
 public class InMemoryTaskManagerTest {
     protected TaskManager taskManager = Managers.getDefault();
+
     @BeforeEach
-    void preparation(){
+    void preparation() {
         taskManager = Managers.getDefault();
     }
+
     @DisplayName("Create new task and check history")
     @Test
     void shouldCreateNewTask() {
@@ -41,6 +44,7 @@ public class InMemoryTaskManagerTest {
         assertEquals(task1, tasksHistory.get(0), "Incorrect first entry in history");
         assertEquals(task2, tasksHistory.get(1), "Incorrect second entry in history");
     }
+
     @DisplayName("Create new epic and check history")
     @Test
     void shouldCreateNewEpic() {
@@ -59,6 +63,7 @@ public class InMemoryTaskManagerTest {
         assertEquals(1, epicsHistory.size(), "Incorrect number of entries in history");
         assertEquals(epic1, epicsHistory.get(0), "Incorrect first entry in history");
     }
+
     @DisplayName("Create new subtask and check history")
     @Test
     void shouldCreateNewSubtask() {
@@ -74,9 +79,10 @@ public class InMemoryTaskManagerTest {
         assertNotNull(subtasksList, "Subtasks not found");
         assertEquals(1, subtasksList.size(), "SubtasksList has different size");
     }
+
     @DisplayName("Check that tasks are equal")
     @Test
-    void shouldBeEqualsTasks(){
+    void shouldBeEqualsTasks() {
         Task task1 = new Task("Task1", "Task1 description", Status.NEW);
         taskManager.createTask(task1);
         Task task2 = new Task("Task1", "Task1 description", Status.NEW);
@@ -87,6 +93,7 @@ public class InMemoryTaskManagerTest {
         assertEquals(task2.getDescription(), taskToCheck.getDescription(), "Different description");
         assertEquals(task2.getStatus(), taskToCheck.getStatus(), "Different status");
     }
+
     @DisplayName("Check that epics are equal")
     @Test
     void shouldBeEqualsEpics() {
@@ -95,7 +102,7 @@ public class InMemoryTaskManagerTest {
         Subtask subtask1InEpic1 = new Subtask("First subtask in epic 1",
                 "First subtask description", Status.NEW, epic1.getId());
         taskManager.createSubtask(subtask1InEpic1);
-        Epic epic2 =  new Epic("Epic", "Epic description");
+        Epic epic2 = new Epic("Epic", "Epic description");
         epic2.setId(1);
         epic2.addSubtask(subtask1InEpic1.getId(), subtask1InEpic1);
         Epic epicToCheck = taskManager.getEpicById(epic2.getId());
@@ -110,15 +117,16 @@ public class InMemoryTaskManagerTest {
         assertEquals(epic2.getSubtasks(), epicToCheck.getSubtasks(),
                 "Different subtasks");
     }
+
     @DisplayName("Check that subtasks are equal")
     @Test
-    void shouldBeEqualsSubtasks(){
+    void shouldBeEqualsSubtasks() {
         Epic epic1 = new Epic("First epic", "First epic description");
         taskManager.createEpic(epic1);
         Subtask subtask1InEpic1 = new Subtask("First subtask in epic 1",
                 "First subtask description", Status.NEW, epic1.getId());
         taskManager.createSubtask(subtask1InEpic1);
-        Subtask subtask2InEpic1 =   new Subtask("First subtask in epic 1",
+        Subtask subtask2InEpic1 = new Subtask("First subtask in epic 1",
                 "First subtask description", Status.NEW, epic1.getId());
         subtask2InEpic1.setId(2);
         Subtask subtaskToCheck = taskManager.getSubtaskById(subtask1InEpic1.getId());
@@ -128,6 +136,7 @@ public class InMemoryTaskManagerTest {
         assertEquals(subtask2InEpic1.getStatus(), subtaskToCheck.getStatus(), "Different status");
         assertEquals(subtask2InEpic1.getEpicId(), subtaskToCheck.getEpicId(), "Different epic id");
     }
+
     @DisplayName("Check task removal by id")
     @Test
     void shouldRemoveTaskById() {
@@ -138,6 +147,7 @@ public class InMemoryTaskManagerTest {
         assertFalse(taskManager.getAllTasks().contains(task1), "Task wasn't deleted");
         assertFalse(taskManager.getHistory().contains(task1), "Task wasn't deleted from history");
     }
+
     @DisplayName("Check epic removal by id")
     @Test
     void shouldRemoveEpicById() {
@@ -153,6 +163,7 @@ public class InMemoryTaskManagerTest {
         assertFalse(taskManager.getHistory().contains(subtask1InEpic1), "Subtask wasn't deleted from history");
 
     }
+
     @DisplayName("Check subtask removal by id")
     @Test
     void shouldRemoveSubtaskById() {
@@ -165,6 +176,7 @@ public class InMemoryTaskManagerTest {
         assertFalse(taskManager.getAllSubtasks().contains(subtask1InEpic1), "Subtask wasn't deleted");
         assertFalse(taskManager.getHistory().contains(subtask1InEpic1), "Subtask wasn't deleted from history");
     }
+
     @DisplayName("Remove all epics")
     @Test
     void shouldRemoveAllEpics() {
@@ -175,6 +187,7 @@ public class InMemoryTaskManagerTest {
         assertTrue(taskManager.getAllSubtasks().isEmpty(), "Subtasks srill present");
         assertFalse(taskManager.getHistory().contains(epic1), "History is filled");
     }
+
     @DisplayName("Update epic")
     @Test
     void shouldUpdateEpic() {

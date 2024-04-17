@@ -4,13 +4,10 @@ import task.Status;
 import task.Task;
 import task.Epic;
 import task.Subtask;
-
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.HashSet;
-
 
 public class InMemoryTaskManager implements TaskManager {
     protected HashMap<Integer, Task> tasks;

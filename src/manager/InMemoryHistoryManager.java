@@ -5,12 +5,9 @@ import task.Task;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class InMemoryHistoryManager implements HistoryManager{
-
     private final List<Task> tasksHistory;
     static final int MAX_VALUE = 10;
-
     public InMemoryHistoryManager() {
         this.tasksHistory = new ArrayList<>();
     }
@@ -25,6 +22,5 @@ public class InMemoryHistoryManager implements HistoryManager{
     public List<Task> getHistory() {
         return new ArrayList<Task>(tasksHistory);
     }
-
 
 }
