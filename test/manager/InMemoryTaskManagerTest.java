@@ -165,6 +165,30 @@ public class InMemoryTaskManagerTest {
         assertFalse(taskManager.getAllSubtasks().contains(subtask1InEpic1), "Subtask wasn't deleted");
         assertFalse(taskManager.getHistory().contains(subtask1InEpic1), "Subtask wasn't deleted from history");
     }
+    @DisplayName("Remove all epics")
+    @Test
+    void shouldRemoveAllEpics() {
+        Epic epic1 = new Epic("First epic", "First epic description");
+        taskManager.getEpicById(epic1.getId());
+        taskManager.removeAllEpics();
+        assertTrue(taskManager.getAllEpics().isEmpty(), "Epics still present");
+        assertTrue(taskManager.getAllSubtasks().isEmpty(), "Subtasks srill present");
+        assertFalse(taskManager.getHistory().contains(epic1), "History is filled");
+    }
+    @DisplayName("Update epic")
+    @Test
+    void shouldUpdateEpic() {
+        Epic epic1 = new Epic("First epic", "First epic description");
+        taskManager.createEpic(epic1);
+        epic1.setTitle("New title");
+        epic1.setDescription("New description");
+        taskManager.updateEpic(epic1);
+        Epic updatedEpic = taskManager.getEpicById(epic1.getId());
+        assertNotNull(updatedEpic, "Epic with id " + epic1.getId() + " not found");
+        assertEquals(epic1.getTitle(), updatedEpic.getTitle(), "Title wasn't updated");
+        assertEquals(epic1.getDescription(), updatedEpic.getDescription(), "Description wasn't updated");
+        assertTrue(taskManager.getAllEpics().contains(updatedEpic), "Updated epic not found in the list of all epics");
+    }
 }
 
 
