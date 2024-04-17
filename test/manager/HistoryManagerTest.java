@@ -1,6 +1,7 @@
 package manager;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import task.Epic;
 import task.Status;
@@ -12,6 +13,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@DisplayName("HistoryManagerTest")
 class HistoryManagerTest {
 
     protected Task task1;
@@ -21,7 +23,7 @@ class HistoryManagerTest {
     protected HistoryManager historyManager;
 
     @BeforeEach
-    void beforeEach() {
+    void preparation() {
         historyManager = Managers.getDefaultHistory();
         task1 = new Task("Task1", "Task1 description", Status.NEW);
         epic1 = new Epic("Epic", "Epic description");
@@ -31,9 +33,9 @@ class HistoryManagerTest {
                 "First subtask description", Status.NEW, epic1.getId());
     }
 
+    @DisplayName("Add different types of tasks into history")
     @Test
     void add() {
-
         historyManager.add(epic1);
         historyManager.add(task1);
         historyManager.add(subtask1InEpic1);
@@ -44,7 +46,7 @@ class HistoryManagerTest {
         assertTrue(tasksHistory.contains(epic1), "Epic is not reflected in history");
         assertTrue(tasksHistory.contains(subtask1InEpic1), "Subtask is not reflected in history");
     }
-
+    @DisplayName("Show history after different manipulations")
     @Test
     void getHistory() {
         assertEquals(0, historyManager.getHistory().size(), "History is filled");
