@@ -189,6 +189,21 @@ public class InMemoryTaskManagerTest {
         assertEquals(epic1.getDescription(), updatedEpic.getDescription(), "Description wasn't updated");
         assertTrue(taskManager.getAllEpics().contains(updatedEpic), "Updated epic not found in the list of all epics");
     }
+
+    @DisplayName("Update subtasks and epic status")
+    @Test
+    void shouldUpdateSubtasksAndEpicStatus() {
+        Epic epic1 = new Epic("First epic", "First epic description");
+        taskManager.createEpic(epic1);
+        Subtask subtask1InEpic = new Subtask("First subtask in epic 1",
+                "First subtask description", Status.NEW, epic1.getId());
+        taskManager.createSubtask(subtask1InEpic);
+        Subtask subtaskInEpicUpdated = new Subtask(2, "Subtask in epic 4 after update",
+                "Subtask in progress", Status.IN_PROGRESS, epic1.getId());
+        taskManager.updateSubtask(subtaskInEpicUpdated);
+        assertEquals(subtaskInEpicUpdated.getStatus(), Status.IN_PROGRESS, "Subtask status wasn't updated");
+        assertEquals(epic1.getStatus(), Status.IN_PROGRESS, "Epic status wasn't updated");
+    }
 }
 
 

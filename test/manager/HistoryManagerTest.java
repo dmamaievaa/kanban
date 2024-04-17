@@ -36,8 +36,8 @@ class HistoryManagerTest {
     @DisplayName("Add different types of tasks into history")
     @Test
     void add() {
-        historyManager.add(epic1);
         historyManager.add(task1);
+        historyManager.add(epic1);
         historyManager.add(subtask1InEpic1);
         final List<Task> tasksHistory = historyManager.getHistory();
         assertNotNull(tasksHistory, "History is filled");
