@@ -13,7 +13,7 @@ import java.util.List;
 
 @DisplayName("InMemoryTaskManagerTest")
 public class InMemoryTaskManagerTest {
-    protected TaskManager taskManager = Managers.getDefault();
+     TaskManager taskManager;
 
     @BeforeEach
     void preparation() {
