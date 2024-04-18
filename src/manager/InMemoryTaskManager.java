@@ -5,23 +5,23 @@ import task.Task;
 import task.Epic;
 import task.Subtask;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.HashMap;
 import java.util.List;
 import java.util.HashSet;
 
 public class InMemoryTaskManager implements TaskManager {
-    protected HashMap<Integer, Task> tasks;
-    protected HashMap<Integer, Subtask> subtasks;
-    protected HashMap<Integer, Epic> epics;
-    protected final HistoryManager historyManager = Managers.getDefaultHistory();
-
-
-    protected int id = 1;
+    private Map<Integer, Task> tasks;
+    private Map<Integer, Subtask> subtasks;
+    private Map<Integer, Epic> epics;
+    private final HistoryManager historyManager;
+    private int id = 1;
 
     public InMemoryTaskManager() {
         this.tasks = new HashMap<>();
         this.epics = new HashMap<>();
         this.subtasks = new HashMap<>();
+        this.historyManager = Managers.getDefaultHistory();
     }
 
     @Override
