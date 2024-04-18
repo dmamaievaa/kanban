@@ -11,10 +11,10 @@ import java.util.List;
 import java.util.HashSet;
 
 public class InMemoryTaskManager implements TaskManager {
-    private Map<Integer, Task> tasks;
-    private Map<Integer, Subtask> subtasks;
-    private Map<Integer, Epic> epics;
-    private final HistoryManager historyManager;
+    private  Map<Integer, Task> tasks;
+    private  Map<Integer, Subtask> subtasks;
+    private  Map<Integer, Epic> epics;
+    private  HistoryManager historyManager;
     private int id = 1;
 
     public InMemoryTaskManager() {
