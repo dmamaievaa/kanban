@@ -4,6 +4,7 @@ import task.Status;
 import task.Task;
 import task.Epic;
 import task.Subtask;
+
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
@@ -39,7 +40,7 @@ public class InMemoryTaskManager implements TaskManager {
     public void updateTask(Task task) {
         if (tasks.containsKey(task.getId())) {
             tasks.put(task.getId(), task);
-        } else  System.out.println("updateTask: Task with ID " + task.getId() + " not found");
+        } else System.out.println("updateTask: Task with ID " + task.getId() + " not found");
     }
 
     @Override
@@ -62,7 +63,7 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void removeAllTasks() {
-        for (int id : tasks.keySet()){
+        for (int id : tasks.keySet()) {
             removeTaskById(id);
         }
     }
@@ -88,6 +89,7 @@ public class InMemoryTaskManager implements TaskManager {
             System.out.println("Epic with ID " + epic.getId() + " not found");
         }
     }
+
     public void findEpicStatus(Epic epic) {
         HashMap<Integer, Subtask> epicSubtasksMap = epic.getSubtasks();
         if (epicSubtasksMap.isEmpty()) {
@@ -229,6 +231,7 @@ public class InMemoryTaskManager implements TaskManager {
         }
         subtasks.clear();
     }
+
     public void generateId() {
         id++;
     }

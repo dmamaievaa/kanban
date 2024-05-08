@@ -11,6 +11,7 @@ public class Epic extends Task {
         this.type = Type.EPIC;
         this.status = Status.NEW;
     }
+
     public Epic(int id, String title, String description) {
         super(title, description);
         this.type = Type.EPIC;
@@ -21,8 +22,9 @@ public class Epic extends Task {
     public HashMap<Integer, Subtask> getSubtasks() {
         return subtasks;
     }
+
     public void addSubtask(int id, Subtask subtask) {
-            subtasks.put(id, subtask);
+        subtasks.put(id, subtask);
     }
 
     @Override

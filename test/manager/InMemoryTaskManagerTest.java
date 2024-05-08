@@ -3,17 +3,20 @@ package manager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
+
 import task.Status;
 import task.Task;
 import task.Epic;
 import task.Subtask;
+
 import java.util.List;
 
 
 @DisplayName("InMemoryTaskManagerTest")
 public class InMemoryTaskManagerTest {
-     TaskManager taskManager;
+    TaskManager taskManager;
 
     @BeforeEach
     void preparation() {
