@@ -8,6 +8,7 @@ import java.util.List;
 public interface TaskManager {
     // Methods for tasks
     List<Task> getHistory();
+
     void createTask(Task task);
 
     void updateTask(Task task);
@@ -24,6 +25,7 @@ public interface TaskManager {
     void createEpic(Epic epic);
 
     void updateEpic(Epic epic);
+    
     void findEpicStatus(Epic epic);
 
     void removeEpicById(int epicId);
