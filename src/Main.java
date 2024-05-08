@@ -9,8 +9,9 @@ import task.Status;
 public class Main {
     public static void main(String[] args) {
         InMemoryTaskManager inMemoryTaskManager = new InMemoryTaskManager();
-        checkMethods(inMemoryTaskManager);
+        //checkMethods(inMemoryTaskManager);
         checkHistory(inMemoryTaskManager);
+
     }
 
     public static void checkMethods(InMemoryTaskManager inMemoryTaskManager) {
@@ -48,22 +49,34 @@ public class Main {
 
     public static void checkHistory(InMemoryTaskManager inMemoryTaskManager) {
         TaskManager taskManager = Managers.getDefault();
-        Task[] tasks = new Task[9];
-        for (int i = 0; i < tasks.length; i++) {
-            tasks[i] = new Task("Task title", "Task description", Status.NEW);
-        }
-        for (Task task : tasks) {
-            inMemoryTaskManager.createTask(task);
-            inMemoryTaskManager.getTaskById(task.getId());
-        }
-        Epic epicHistory = new Epic("Epic title", "Epic description");
-        inMemoryTaskManager.createEpic(epicHistory);
-        inMemoryTaskManager.getEpicById(epicHistory.getId());
-        Subtask subtaskHistory = new Subtask("Subtask title",
-                "Subtask description", Status.NEW, epicHistory.getId());
-        inMemoryTaskManager.createSubtask(subtaskHistory);
-        inMemoryTaskManager.getSubtaskById(subtaskHistory.getId());
+        Task task1 = new Task("First task", "First task description", Status.NEW);
+        inMemoryTaskManager.createTask(task1);
+        Task task2 = new Task("Second task", "Second task description", Status.IN_PROGRESS);
+        inMemoryTaskManager.createTask(task2);
+        Epic epic = new Epic("Epic title", "Epic description");
+        inMemoryTaskManager.createEpic(epic);
+        Subtask subtask1 = new Subtask("Subtask title",
+                "Subtask description", Status.NEW, epic.getId());
+        inMemoryTaskManager.createSubtask(subtask1);
+        Subtask subtask2 = new Subtask("Subtask title",
+                "Subtask description", Status.NEW, epic.getId());
+        inMemoryTaskManager.createSubtask(subtask2);
+        Subtask subtask3 = new Subtask("Subtask title",
+                "Subtask description", Status.NEW, epic.getId());
+        inMemoryTaskManager.createSubtask(subtask3);
+        inMemoryTaskManager.getEpicById(epic.getId());
         System.out.println("View history: ");
+        System.out.println(inMemoryTaskManager.getHistory());
+        inMemoryTaskManager.getTaskById(task2.getId());
+        System.out.println("View history: ");
+        System.out.println(inMemoryTaskManager.getHistory());
+        inMemoryTaskManager.getTaskById(task1.getId());
+        System.out.println("View history: ");
+        System.out.println(inMemoryTaskManager.getHistory());
+        inMemoryTaskManager.getSubtaskById(subtask2.getId());
+        System.out.println("View history: ");
+        System.out.println(inMemoryTaskManager.getHistory());
+        inMemoryTaskManager.removeEpicById(epic.getId());
         System.out.println(inMemoryTaskManager.getHistory());
     }
 }

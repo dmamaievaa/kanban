@@ -180,7 +180,8 @@ public class InMemoryTaskManagerTest {
     @DisplayName("Remove all epics")
     @Test
     void shouldRemoveAllEpics() {
-        Epic epic1 = new Epic("First epic", "First epic description");
+        Epic epic1 = new Epic(1, "First epic", "First epic description");
+        taskManager.createEpic(epic1);
         taskManager.getEpicById(epic1.getId());
         taskManager.removeAllEpics();
         assertTrue(taskManager.getAllEpics().isEmpty(), "Epics still present");
