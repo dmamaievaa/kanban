@@ -3,17 +3,20 @@ package manager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
+
 import task.Status;
 import task.Task;
 import task.Epic;
 import task.Subtask;
+
 import java.util.List;
 
 
 @DisplayName("InMemoryTaskManagerTest")
 public class InMemoryTaskManagerTest {
-     TaskManager taskManager;
+    TaskManager taskManager;
 
     @BeforeEach
     void preparation() {
@@ -180,7 +183,8 @@ public class InMemoryTaskManagerTest {
     @DisplayName("Remove all epics")
     @Test
     void shouldRemoveAllEpics() {
-        Epic epic1 = new Epic("First epic", "First epic description");
+        Epic epic1 = new Epic(1, "First epic", "First epic description");
+        taskManager.createEpic(epic1);
         taskManager.getEpicById(epic1.getId());
         taskManager.removeAllEpics();
         assertTrue(taskManager.getAllEpics().isEmpty(), "Epics still present");

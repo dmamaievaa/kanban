@@ -23,6 +23,7 @@ public class Task {
         this.status = status;
         this.type = Type.TASK;
     }
+
     public Task(String title, String description) {
         this.title = title;
         this.description = description;
