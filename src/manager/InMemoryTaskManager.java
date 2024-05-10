@@ -237,13 +237,4 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
 
-/*    public void printAllInstances() {
-        System.out.println("Tasks:");
-        System.out.println(getAllTasks());
-        System.out.println("Subtasks");
-        System.out.println(getAllSubtasks());
-        System.out.println("Epics");
-        System.out.println(getAllEpics());
-    }*/
-
 }
