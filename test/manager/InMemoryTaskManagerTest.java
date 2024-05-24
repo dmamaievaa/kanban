@@ -1,6 +1,5 @@
 package manager;
 
-import exceptions.ManagerSaveException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -25,7 +24,7 @@ public class InMemoryTaskManagerTest {
 
     @DisplayName("Create new task and check history")
     @Test
-    void shouldCreateNewTask() throws ManagerSaveException {
+    void shouldCreateNewTask() {
         Task task1 = new Task("Task1", "Task1 description", Status.NEW);
         taskManager.createTask(task1);
         Task createdTask = taskManager.getTaskById(task1.getId());
@@ -50,7 +49,7 @@ public class InMemoryTaskManagerTest {
 
     @DisplayName("Create new epic and check history")
     @Test
-    void shouldCreateNewEpic() throws ManagerSaveException {
+    void shouldCreateNewEpic() {
         Epic epic1 = new Epic("Epic", "Epic description");
         taskManager.createEpic(epic1);
         Epic createdEpic = taskManager.getEpicById(epic1.getId());
@@ -69,11 +68,10 @@ public class InMemoryTaskManagerTest {
 
     @DisplayName("Create new subtask and check history")
     @Test
-    void shouldCreateNewSubtask() throws ManagerSaveException {
+    void shouldCreateNewSubtask() {
         Epic epic1 = new Epic("First epic", "First epic description");
         taskManager.createEpic(epic1);
-        Subtask subtask1InEpic1 = new Subtask("First subtask in epic 1",
-                "First subtask description", Status.NEW, epic1.getId());
+        Subtask subtask1InEpic1 = new Subtask("First subtask in epic 1", "First subtask description", Status.NEW, epic1.getId());
         taskManager.createSubtask(subtask1InEpic1);
         Task createdSubtask = taskManager.getSubtaskById(subtask1InEpic1.getId());
         assertNotNull(createdSubtask, "Subtask not found");
@@ -85,7 +83,7 @@ public class InMemoryTaskManagerTest {
 
     @DisplayName("Check that tasks are equal")
     @Test
-    void shouldBeEqualsTasks() throws ManagerSaveException {
+    void shouldBeEqualsTasks() {
         Task task1 = new Task("Task1", "Task1 description", Status.NEW);
         taskManager.createTask(task1);
         Task task2 = new Task("Task1", "Task1 description", Status.NEW);
@@ -99,38 +97,30 @@ public class InMemoryTaskManagerTest {
 
     @DisplayName("Check that epics are equal")
     @Test
-    void shouldBeEqualsEpics() throws ManagerSaveException {
+    void shouldBeEqualsEpics() {
         Epic epic1 = new Epic("Epic", "Epic description");
         taskManager.createEpic(epic1);
-        Subtask subtask1InEpic1 = new Subtask("First subtask in epic 1",
-                "First subtask description", Status.NEW, epic1.getId());
+        Subtask subtask1InEpic1 = new Subtask("First subtask in epic 1", "First subtask description", Status.NEW, epic1.getId());
         taskManager.createSubtask(subtask1InEpic1);
         Epic epic2 = new Epic("Epic", "Epic description");
         epic2.setId(1);
         epic2.addSubtask(subtask1InEpic1.getId(), subtask1InEpic1);
         Epic epicToCheck = taskManager.getEpicById(epic2.getId());
-        assertEquals(epic2.getId(), epicToCheck.getId(),
-                "Different id");
-        assertEquals(epic2.getTitle(), epicToCheck.getTitle(),
-                "Different title");
-        assertEquals(epic2.getDescription(), epicToCheck.getDescription(),
-                "Different description");
-        assertEquals(epic2.getStatus(), epicToCheck.getStatus(),
-                "Different status");
-        assertEquals(epic2.getSubtasks(), epicToCheck.getSubtasks(),
-                "Different subtasks");
+        assertEquals(epic2.getId(), epicToCheck.getId(), "Different id");
+        assertEquals(epic2.getTitle(), epicToCheck.getTitle(), "Different title");
+        assertEquals(epic2.getDescription(), epicToCheck.getDescription(), "Different description");
+        assertEquals(epic2.getStatus(), epicToCheck.getStatus(), "Different status");
+        assertEquals(epic2.getSubtasks(), epicToCheck.getSubtasks(), "Different subtasks");
     }
 
     @DisplayName("Check that subtasks are equal")
     @Test
-    void shouldBeEqualsSubtasks() throws ManagerSaveException {
+    void shouldBeEqualsSubtasks() {
         Epic epic1 = new Epic("First epic", "First epic description");
         taskManager.createEpic(epic1);
-        Subtask subtask1InEpic1 = new Subtask("First subtask in epic 1",
-                "First subtask description", Status.NEW, epic1.getId());
+        Subtask subtask1InEpic1 = new Subtask("First subtask in epic 1", "First subtask description", Status.NEW, epic1.getId());
         taskManager.createSubtask(subtask1InEpic1);
-        Subtask subtask2InEpic1 = new Subtask("First subtask in epic 1",
-                "First subtask description", Status.NEW, epic1.getId());
+        Subtask subtask2InEpic1 = new Subtask("First subtask in epic 1", "First subtask description", Status.NEW, epic1.getId());
         subtask2InEpic1.setId(2);
         Subtask subtaskToCheck = taskManager.getSubtaskById(subtask1InEpic1.getId());
         assertEquals(subtask2InEpic1.getId(), subtaskToCheck.getId(), "Different id");
@@ -142,7 +132,7 @@ public class InMemoryTaskManagerTest {
 
     @DisplayName("Check task removal by id")
     @Test
-    void shouldRemoveTaskById() throws ManagerSaveException {
+    void shouldRemoveTaskById() {
         Task task1 = new Task("Task1", "Task1 description", Status.NEW);
         taskManager.createTask(task1);
         taskManager.removeTaskById(task1.getId());
@@ -152,11 +142,10 @@ public class InMemoryTaskManagerTest {
 
     @DisplayName("Check epic removal by id")
     @Test
-    void shouldRemoveEpicById() throws ManagerSaveException {
+    void shouldRemoveEpicById() {
         Epic epic1 = new Epic("First epic", "First epic description");
         taskManager.createEpic(epic1);
-        Subtask subtask1InEpic1 = new Subtask("First subtask in epic 1",
-                "First subtask description", Status.NEW, epic1.getId());
+        Subtask subtask1InEpic1 = new Subtask("First subtask in epic 1", "First subtask description", Status.NEW, epic1.getId());
         taskManager.createSubtask(subtask1InEpic1);
         taskManager.removeEpicById(epic1.getId());
         assertFalse(taskManager.getAllEpics().contains(epic1), "Epic wasn't deleted");
@@ -168,11 +157,10 @@ public class InMemoryTaskManagerTest {
 
     @DisplayName("Check subtask removal by id")
     @Test
-    void shouldRemoveSubtaskById() throws ManagerSaveException {
+    void shouldRemoveSubtaskById() {
         Epic epic1 = new Epic("First epic", "First epic description");
         taskManager.createEpic(epic1);
-        Subtask subtask1InEpic1 = new Subtask("First subtask in epic 1",
-                "First subtask description", Status.NEW, epic1.getId());
+        Subtask subtask1InEpic1 = new Subtask("First subtask in epic 1", "First subtask description", Status.NEW, epic1.getId());
         taskManager.createSubtask(subtask1InEpic1);
         taskManager.removeSubtaskById(subtask1InEpic1.getId());
         assertFalse(taskManager.getAllSubtasks().contains(subtask1InEpic1), "Subtask wasn't deleted");
@@ -181,7 +169,7 @@ public class InMemoryTaskManagerTest {
 
     @DisplayName("Remove all epics")
     @Test
-    void shouldRemoveAllEpics() throws ManagerSaveException {
+    void shouldRemoveAllEpics() {
         Epic epic1 = new Epic(1, "First epic", "First epic description");
         taskManager.createEpic(epic1);
         taskManager.getEpicById(epic1.getId());
@@ -193,7 +181,7 @@ public class InMemoryTaskManagerTest {
 
     @DisplayName("Update epic")
     @Test
-    void shouldUpdateEpic() throws ManagerSaveException {
+    void shouldUpdateEpic() {
         Epic epic1 = new Epic("First epic", "First epic description");
         taskManager.createEpic(epic1);
         epic1.setTitle("New title");
@@ -208,14 +196,12 @@ public class InMemoryTaskManagerTest {
 
     @DisplayName("Update subtasks and epic status")
     @Test
-    void shouldUpdateSubtasksAndEpicStatus() throws ManagerSaveException {
+    void shouldUpdateSubtasksAndEpicStatus() {
         Epic epic1 = new Epic("First epic", "First epic description");
         taskManager.createEpic(epic1);
-        Subtask subtask1InEpic = new Subtask("First subtask in epic 1",
-                "First subtask description", Status.NEW, epic1.getId());
+        Subtask subtask1InEpic = new Subtask("First subtask in epic 1", "First subtask description", Status.NEW, epic1.getId());
         taskManager.createSubtask(subtask1InEpic);
-        Subtask subtaskInEpicUpdated = new Subtask(2, "Subtask in epic 4 after update",
-                "Subtask in progress", Status.IN_PROGRESS, epic1.getId());
+        Subtask subtaskInEpicUpdated = new Subtask(2, "Subtask in epic 4 after update", "Subtask in progress", Status.IN_PROGRESS, epic1.getId());
         taskManager.updateSubtask(subtaskInEpicUpdated);
         assertEquals(subtaskInEpicUpdated.getStatus(), Status.IN_PROGRESS, "Subtask status wasn't updated");
         assertEquals(epic1.getStatus(), Status.IN_PROGRESS, "Epic status wasn't updated");
