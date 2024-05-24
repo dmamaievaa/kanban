@@ -1,3 +1,4 @@
+import exceptions.ManagerSaveException;
 import manager.Managers;
 import manager.TaskManager;
 import task.Epic;
@@ -7,14 +8,14 @@ import task.Task;
 
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ManagerSaveException {
         TaskManager taskManager = Managers.getDefault();
         checkMethods(taskManager);
         checkHistory(taskManager);
 
     }
 
-    public static void printAllInstances(TaskManager taskManager) {
+    public static void printAllInstances(TaskManager taskManager) throws ManagerSaveException {
         System.out.println("Tasks:");
         System.out.println(taskManager.getAllTasks());
         System.out.println("Subtasks");
@@ -23,7 +24,7 @@ public class Main {
         System.out.println(taskManager.getAllEpics());
     }
 
-    public static void checkMethods(TaskManager taskManager) {
+    public static void checkMethods(TaskManager taskManager) throws ManagerSaveException {
         Task task1 = new Task("First task", "First task description", Status.NEW);
         Task task2 = new Task("Second task", "Second task description", Status.IN_PROGRESS);
         taskManager.createTask(task1);
@@ -55,7 +56,7 @@ public class Main {
         printAllInstances(taskManager);
     }
 
-    public static void checkHistory(TaskManager taskManager) {
+    public static void checkHistory(TaskManager taskManager) throws ManagerSaveException {
         Task task1 = new Task("First task", "First task description", Status.NEW);
         taskManager.createTask(task1);
         Task task2 = new Task("Second task", "Second task description", Status.IN_PROGRESS);

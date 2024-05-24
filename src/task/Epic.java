@@ -12,7 +12,7 @@ public class Epic extends Task {
         this.status = Status.NEW;
     }
 
-    public Epic(int id, String title, String description) {
+    public Epic(Integer id, String title, String description) {
         super(title, description);
         this.type = Type.EPIC;
         this.status = Status.NEW;
@@ -23,7 +23,7 @@ public class Epic extends Task {
         return subtasks;
     }
 
-    public void addSubtask(int id, Subtask subtask) {
+    public void addSubtask(Integer id, Subtask subtask) {
         subtasks.put(id, subtask);
     }
 

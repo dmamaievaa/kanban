@@ -1,17 +1,17 @@
 package manager;
 
+import exceptions.ManagerSaveException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
-
-import task.Status;
-import task.Task;
 import task.Epic;
+import task.Status;
 import task.Subtask;
+import task.Task;
 
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 
 @DisplayName("InMemoryTaskManagerTest")
@@ -25,7 +25,7 @@ public class InMemoryTaskManagerTest {
 
     @DisplayName("Create new task and check history")
     @Test
-    void shouldCreateNewTask() {
+    void shouldCreateNewTask() throws ManagerSaveException {
         Task task1 = new Task("Task1", "Task1 description", Status.NEW);
         taskManager.createTask(task1);
         Task createdTask = taskManager.getTaskById(task1.getId());
@@ -50,7 +50,7 @@ public class InMemoryTaskManagerTest {
 
     @DisplayName("Create new epic and check history")
     @Test
-    void shouldCreateNewEpic() {
+    void shouldCreateNewEpic() throws ManagerSaveException {
         Epic epic1 = new Epic("Epic", "Epic description");
         taskManager.createEpic(epic1);
         Epic createdEpic = taskManager.getEpicById(epic1.getId());
@@ -69,7 +69,7 @@ public class InMemoryTaskManagerTest {
 
     @DisplayName("Create new subtask and check history")
     @Test
-    void shouldCreateNewSubtask() {
+    void shouldCreateNewSubtask() throws ManagerSaveException {
         Epic epic1 = new Epic("First epic", "First epic description");
         taskManager.createEpic(epic1);
         Subtask subtask1InEpic1 = new Subtask("First subtask in epic 1",
@@ -85,7 +85,7 @@ public class InMemoryTaskManagerTest {
 
     @DisplayName("Check that tasks are equal")
     @Test
-    void shouldBeEqualsTasks() {
+    void shouldBeEqualsTasks() throws ManagerSaveException {
         Task task1 = new Task("Task1", "Task1 description", Status.NEW);
         taskManager.createTask(task1);
         Task task2 = new Task("Task1", "Task1 description", Status.NEW);
@@ -99,7 +99,7 @@ public class InMemoryTaskManagerTest {
 
     @DisplayName("Check that epics are equal")
     @Test
-    void shouldBeEqualsEpics() {
+    void shouldBeEqualsEpics() throws ManagerSaveException {
         Epic epic1 = new Epic("Epic", "Epic description");
         taskManager.createEpic(epic1);
         Subtask subtask1InEpic1 = new Subtask("First subtask in epic 1",
@@ -123,7 +123,7 @@ public class InMemoryTaskManagerTest {
 
     @DisplayName("Check that subtasks are equal")
     @Test
-    void shouldBeEqualsSubtasks() {
+    void shouldBeEqualsSubtasks() throws ManagerSaveException {
         Epic epic1 = new Epic("First epic", "First epic description");
         taskManager.createEpic(epic1);
         Subtask subtask1InEpic1 = new Subtask("First subtask in epic 1",
@@ -142,18 +142,17 @@ public class InMemoryTaskManagerTest {
 
     @DisplayName("Check task removal by id")
     @Test
-    void shouldRemoveTaskById() {
+    void shouldRemoveTaskById() throws ManagerSaveException {
         Task task1 = new Task("Task1", "Task1 description", Status.NEW);
         taskManager.createTask(task1);
         taskManager.removeTaskById(task1.getId());
-        assertNotNull(task1.getId(), "Invalid id");
         assertFalse(taskManager.getAllTasks().contains(task1), "Task wasn't deleted");
         assertFalse(taskManager.getHistory().contains(task1), "Task wasn't deleted from history");
     }
 
     @DisplayName("Check epic removal by id")
     @Test
-    void shouldRemoveEpicById() {
+    void shouldRemoveEpicById() throws ManagerSaveException {
         Epic epic1 = new Epic("First epic", "First epic description");
         taskManager.createEpic(epic1);
         Subtask subtask1InEpic1 = new Subtask("First subtask in epic 1",
@@ -169,7 +168,7 @@ public class InMemoryTaskManagerTest {
 
     @DisplayName("Check subtask removal by id")
     @Test
-    void shouldRemoveSubtaskById() {
+    void shouldRemoveSubtaskById() throws ManagerSaveException {
         Epic epic1 = new Epic("First epic", "First epic description");
         taskManager.createEpic(epic1);
         Subtask subtask1InEpic1 = new Subtask("First subtask in epic 1",
@@ -182,7 +181,7 @@ public class InMemoryTaskManagerTest {
 
     @DisplayName("Remove all epics")
     @Test
-    void shouldRemoveAllEpics() {
+    void shouldRemoveAllEpics() throws ManagerSaveException {
         Epic epic1 = new Epic(1, "First epic", "First epic description");
         taskManager.createEpic(epic1);
         taskManager.getEpicById(epic1.getId());
@@ -194,7 +193,7 @@ public class InMemoryTaskManagerTest {
 
     @DisplayName("Update epic")
     @Test
-    void shouldUpdateEpic() {
+    void shouldUpdateEpic() throws ManagerSaveException {
         Epic epic1 = new Epic("First epic", "First epic description");
         taskManager.createEpic(epic1);
         epic1.setTitle("New title");
@@ -209,7 +208,7 @@ public class InMemoryTaskManagerTest {
 
     @DisplayName("Update subtasks and epic status")
     @Test
-    void shouldUpdateSubtasksAndEpicStatus() {
+    void shouldUpdateSubtasksAndEpicStatus() throws ManagerSaveException {
         Epic epic1 = new Epic("First epic", "First epic description");
         taskManager.createEpic(epic1);
         Subtask subtask1InEpic = new Subtask("First subtask in epic 1",
