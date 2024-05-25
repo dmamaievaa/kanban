@@ -3,7 +3,7 @@ package manager;
 import java.io.File;
 
 public class Managers {
-    static File file = new File("resources/task.csv");
+    private static final File file = new File("resources/task.csv");
 
     public static TaskManager getDefault() {
         return new InMemoryTaskManager();

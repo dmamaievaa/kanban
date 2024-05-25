@@ -5,12 +5,16 @@ import task.Epic;
 import task.Subtask;
 import task.Task;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class FileBackedTaskManager extends InMemoryTaskManager {
-    static TaskManager taskManager = Managers.getDefault();
     private final File file;
 
     public FileBackedTaskManager(File file) {
@@ -41,14 +45,14 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                             if (fileBackedTaskManager.epics.containsKey(task.getEpicId())) {
                                 Epic epic = fileBackedTaskManager.epics.get(task.getEpicId());
                                 epic.addSubtask(task.getId(), (Subtask) task);
-                                taskManager.findEpicStatus(epic);
+                                fileBackedTaskManager.findEpicStatus(epic);
                             }
                         }
                     }
                 }
             }
-        } catch (IOException e) {
-            throw new ManagerSaveException("Error occurred during reading the file", e);
+        } catch (IOException exception) {
+            throw new ManagerSaveException("Error occurred during reading the file", exception);
         }
         return fileBackedTaskManager;
     }
@@ -63,7 +67,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
             for (Task task : tasks) {
                 writer.write(TaskConverter.toString(task) + "\n");
             }
-        } catch (IOException e) {
+        } catch (IOException exception) {
             throw new ManagerSaveException("File saving failed");
         }
 

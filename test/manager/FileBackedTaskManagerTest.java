@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class FileBackedTaskManagerTest {
 
-    TaskManager taskManager;
+    private TaskManager taskManager;
 
     @BeforeEach
     void preparation() {
@@ -41,8 +41,7 @@ class FileBackedTaskManagerTest {
         taskManager.createEpic(epic);
         assertEquals(task3, epic);
         Task task4 = TaskConverter.fromString(lines[2]);
-        Subtask subtask1 = new Subtask("Subtask1",
-                "Subtask1 description", Status.NEW, task3.getId());
+        Subtask subtask1 = new Subtask("Subtask1", "Subtask1 description", Status.NEW, task3.getId());
         taskManager.createSubtask(subtask1);
         assertEquals(task4, subtask1);
     }
