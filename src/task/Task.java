@@ -3,13 +3,13 @@ package task;
 import java.util.Objects;
 
 public class Task {
-    protected int id;
+    protected Integer id;
     protected String title;
     protected String description;
     protected Status status;
     protected Type type;
 
-    public Task(int id, String title, String description, Status status) {
+    public Task(Integer id, String title, String description, Status status) {
         this.title = title;
         this.description = description;
         this.status = status;
@@ -30,7 +30,7 @@ public class Task {
         this.type = Type.TASK;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -66,6 +66,10 @@ public class Task {
         return Type.TASK;
     }
 
+    public Integer getEpicId() {
+        return null;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -86,4 +90,6 @@ public class Task {
                 "title:" + title + ", " +
                 "description:" + description + "\n";
     }
+
+
 }

@@ -14,9 +14,9 @@ public interface TaskManager {
 
     void updateTask(Task task);
 
-    void removeTaskById(int taskId);
+    void removeTaskById(Integer taskId);
 
-    Task getTaskById(int taskId);
+    Task getTaskById(Integer taskId);
 
     List<Task> getAllTasks();
 
@@ -29,9 +29,9 @@ public interface TaskManager {
 
     void findEpicStatus(Epic epic);
 
-    void removeEpicById(int epicId);
+    void removeEpicById(Integer epicId);
 
-    Epic getEpicById(int epicId);
+    Epic getEpicById(Integer epicId);
 
     List<Epic> getAllEpics();
 
@@ -42,9 +42,9 @@ public interface TaskManager {
 
     void updateSubtask(Subtask subtask);
 
-    void removeSubtaskById(int id);
+    void removeSubtaskById(Integer id);
 
-    Subtask getSubtaskById(int subtaskId);
+    Subtask getSubtaskById(Integer subtaskId);
 
     List<Subtask> getAllSubtasks();
 
