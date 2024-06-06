@@ -13,7 +13,6 @@ public class Task {
     protected Duration duration;
     protected LocalDateTime startTime;
 
-
     public Task(Integer id, String title, String description, Status status) {
         this.title = title;
         this.description = description;
@@ -43,7 +42,8 @@ public class Task {
         this.duration = duration;
     }
 
-    public Task(String title, String description, Status status, LocalDateTime startTime, Duration duration) {
+    public Task(String title, String description, Status status, LocalDateTime startTime,
+                Duration duration) {
         this.title = title;
         this.description = description;
         this.status = status;
@@ -52,7 +52,8 @@ public class Task {
         this.duration = duration;
     }
 
-    public Task(Integer id, String title, String description, Status status, LocalDateTime startTime, Duration duration) {
+    public Task(Integer id, String title, String description, Status status,
+                LocalDateTime startTime, Duration duration) {
         this.title = title;
         this.description = description;
         this.status = status;
@@ -102,19 +103,19 @@ public class Task {
         return null;
     }
 
-    public LocalDateTime getEndTime(){
-        if (!(startTime == null) && !duration.isZero()){
+    public LocalDateTime getEndTime() {
+        if (!(startTime == null) && !duration.isZero()) {
             return startTime.plus(duration);
         }
         return null;
     }
 
-    public Duration getDuration(){
+    public Duration getDuration() {
         return duration;
     }
 
-    public void setDuration(Duration duration){
-        this.duration=duration;
+    public void setDuration(Duration duration) {
+        this.duration = duration;
     }
 
     public LocalDateTime getStartTime() {
@@ -148,5 +149,4 @@ public class Task {
                 "description:" + description + ", " +
                 "duration:" + hours + "h " + minutes + "m\n";
     }
-
 }
