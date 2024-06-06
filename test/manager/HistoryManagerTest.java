@@ -11,8 +11,9 @@ import task.Status;
 import task.Subtask;
 import task.Task;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -31,15 +32,15 @@ class HistoryManagerTest {
     @BeforeEach
     void preparation() {
         historyManager = Managers.getDefaultHistory();
-        task1 = new Task(1, "Task1", "Task1 description", Status.NEW);
-        task2 = new Task(2, "Task2", "Task2 description", Status.NEW);
-        task3 = new Task(3, "Task3", "Task3 description", Status.NEW);
+        task1 = new Task(1, "Task1", "Task1 description", Status.NEW, LocalDateTime.of(2024, 6, 4, 10, 0), Duration.ofHours(1));
+        task2 = new Task(2, "Task2", "Task2 description", Status.NEW, LocalDateTime.of(2024, 6, 4, 10, 0), Duration.ofHours(1));
+        task3 = new Task(3, "Task3", "Task3 description", Status.NEW, LocalDateTime.of(2024, 6, 4, 10, 0), Duration.ofHours(1));
 
         epic1 = new Epic(4, "Epic", "Epic description");
         subtask1InEpic1 = new Subtask(5, "First subtask in epic 1",
-                "First subtask description", Status.NEW, epic1.getId());
+                "First subtask description", Status.NEW, epic1.getId(), LocalDateTime.of(2024, 6, 4, 10, 10), Duration.ofHours(1));
         subtask2InEpic1 = new Subtask(6, "First subtask in epic 1",
-                "First subtask description", Status.NEW, epic1.getId());
+                "First subtask description", Status.NEW, epic1.getId(), LocalDateTime.of(2024, 6, 4, 10, 0), Duration.ofHours(1));
     }
 
     @DisplayName("Add different types of tasks into history")
@@ -63,12 +64,14 @@ class HistoryManagerTest {
         List<Task> expectedHistory = new ArrayList<>();
         historyManager.add(task1);
         expectedHistory.add(task1);
+        TaskManager taskManager = Managers.getDefault();
+        epic1.addSubtask(subtask1InEpic1.getId(), subtask1InEpic1);
+        taskManager.calcEpicEndTime(epic1);
         historyManager.add(epic1);
         expectedHistory.add(epic1);
         historyManager.add(subtask1InEpic1);
         expectedHistory.add(subtask1InEpic1);
         System.out.println(expectedHistory);
-        System.out.println(historyManager.getHistory());
         List<Task> actualHistory = historyManager.getHistory();
         assertNotNull(actualHistory, "History is empty");
         assertEquals(expectedHistory.size(), actualHistory.size(), "Sizes of history lists are different");
@@ -124,5 +127,23 @@ class HistoryManagerTest {
         assertEquals(Collections.emptyList(), historyManager.getHistory(), "Lone task still presents in history");
     }
 
+    @DisplayName("Empty history")
+    @Test
+    void shouldBeEmptyHistory() {
+        List<Task> history = historyManager.getHistory();
+        assertNotNull(history, "History should not be null");
+        assertTrue(history.isEmpty(), "History should be empty");
+    }
+
+    @DisplayName("Duplicate tasks in history")
+    @Test
+    void shouldntAddDuplicateTask() {
+        historyManager.add(task1);
+        historyManager.add(task1);
+        List<Task> history = historyManager.getHistory();
+        assertNotNull(history, "History should not be null");
+        assertEquals(1, history.size(), "History should contain only one instance of task");
+        assertTrue(history.contains(task1), "The task should be in the history");
+    }
 
 }
