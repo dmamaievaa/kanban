@@ -208,7 +208,7 @@ public class InMemoryTaskManager implements TaskManager {
         }
     }
 
-     @Override
+    @Override
     public void updateSubtask(Subtask subtask) {
         int subtaskId = subtask.getId();
         if (subtasks.containsKey(subtaskId)) {
@@ -216,14 +216,18 @@ public class InMemoryTaskManager implements TaskManager {
             prioritizedTasks.remove(subtask);
             prioritizedTasks.add(subtask);
             subtasks.put(subtaskId, subtask);
-            epics.values().stream().filter(epic ->
-                    epic.getSubtasks().containsValue(subtask)).findFirst().ifPresent(epicToUpdate ->
-            {epicToUpdate.getSubtasks().put(subtaskId, subtask);
-                findEpicStatus(epicToUpdate);});
+            epics.values().stream()
+                    .filter(epic -> epic.getSubtasks().containsValue(subtask))
+                    .findFirst()
+                    .ifPresent(epicToUpdate -> {
+                        epicToUpdate.getSubtasks().put(subtaskId, subtask);
+                        findEpicStatus(epicToUpdate);
+                    });
         } else {
             System.out.println("Subtask with id " + subtaskId + " not found");
         }
     }
+
 
     @Override
     public void removeSubtaskById(Integer id) {
