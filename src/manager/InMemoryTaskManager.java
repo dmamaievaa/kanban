@@ -218,10 +218,8 @@ public class InMemoryTaskManager implements TaskManager {
             subtasks.put(subtaskId, subtask);
             epics.values().stream().filter(epic ->
                     epic.getSubtasks().containsValue(subtask)).findFirst().ifPresent(epicToUpdate ->
-            {
-                epicToUpdate.getSubtasks().put(subtaskId, subtask);
-                findEpicStatus(epicToUpdate);
-            });
+            {epicToUpdate.getSubtasks().put(subtaskId, subtask);
+                findEpicStatus(epicToUpdate);});
         } else {
             System.out.println("Subtask with id " + subtaskId + " not found");
         }
