@@ -291,24 +291,23 @@ public class InMemoryTaskManager implements TaskManager {
         }
         LocalDateTime taskToAddStartTime = task.getStartTime();
         LocalDateTime taskToAddEndTime = task.getEndTime();
-        for (Task taskToCheck : prioritizedTasks) {
+
+        prioritizedTasks.forEach(taskToCheck -> {
             if (Objects.equals(taskToCheck.getId(), task.getId())) {
-                continue;
+                return;
             }
             LocalDateTime taskToCheckStartTime = taskToCheck.getStartTime();
             LocalDateTime taskToCheckEndTime = taskToCheck.getEndTime();
             if (!taskToAddEndTime.isAfter(taskToCheckStartTime)
                     || !taskToAddStartTime.isBefore(taskToCheckEndTime)) {
-                continue;
+                return;
             }
             throw new TaskValidationException("Task intersects with task with id "
                     + taskToCheck.getId() + " from " + taskToCheckStartTime + " to "
                     + taskToCheckEndTime);
-        }
+        });
     }
-
 }
-
 
 
 
