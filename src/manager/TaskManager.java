@@ -37,6 +37,8 @@ public interface TaskManager {
 
     void removeAllEpics();
 
+    void calcEpicEndTime(Epic epic);
+
     // Methods for subtasks
     void createSubtask(Subtask subtask);
 
@@ -50,4 +52,7 @@ public interface TaskManager {
 
     void removeAllSubtasks();
 
+    List<Task> getPrioritizedTasks();
+
+    void checkTaskTime(Task task);
 }
