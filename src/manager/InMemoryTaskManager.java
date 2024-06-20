@@ -172,7 +172,6 @@ public class InMemoryTaskManager implements TaskManager {
         LocalDateTime epicStartTime = null;
         LocalDateTime epicEndTime = null;
         if (epic.getSubtasks() != null) {
-            System.out.println(epic.getSubtasks());
             for (Subtask subtask : epic.getSubtasks().values()) {
                 totalDuration = totalDuration.plus(subtask.getDuration());
                 if (subtask.getStartTime() != null && (epicStartTime == null
@@ -308,11 +307,3 @@ public class InMemoryTaskManager implements TaskManager {
         });
     }
 }
-
-
-
-
-
-
-
-
