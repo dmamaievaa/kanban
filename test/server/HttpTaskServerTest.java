@@ -32,13 +32,13 @@ public class HttpTaskServerTest {
     private static final String HISTORY_URL = "http://localhost:8080/history";
     private static final String PRIORITIZED_URL = "http://localhost:8080/prioritized";
 
-    protected TaskManager manager = Managers.getDefault();
+    private TaskManager manager = Managers.getDefault();
     private HttpTaskServer taskServer = new HttpTaskServer(manager);
-    Gson gson = HttpTaskServer.getGson();
-    protected Task task1;
-    protected Task task2;
-    protected Epic epic1;
-    protected Subtask subtask1;
+    private Gson gson = HttpTaskServer.getGson();
+    private Task task1;
+    private Task task2;
+    private Epic epic1;
+    private Subtask subtask1;
 
     public HttpTaskServerTest() throws IOException {}
 
